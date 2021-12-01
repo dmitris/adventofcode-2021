@@ -12,12 +12,17 @@ fn main() -> Result<()> {
 }
 
 fn part1(input: &str) -> Result<()> {
-    let sum  = input.lines()
-        .filter_map(|s| s.parse::<usize>().ok())
-        .tuple_windows()
-        .filter(|(a,b)| *a < *b )
-        .count();
+    // let sum  = input.lines()
+    //     .filter_map(|s| s.parse::<usize>().ok())
+    //     .tuple_windows()
+    //     .filter(|(a,b)| *a < *b )
+    //     .count();
 
+    let sum = input.lines()
+        .map(|line| line.parse().unwrap())
+        .fold((0u16, u16::MAX), |(sum, prev), curr| {
+            (if curr > prev { sum + 1 } else { sum }, curr)
+        }).0;
     writeln!(io::stdout(), "part1: {}", sum)?;
     Ok(())
 }
