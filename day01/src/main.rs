@@ -12,22 +12,13 @@ fn main() -> Result<()> {
 }
 
 fn part1(input: &str) -> Result<()> {
-    let mut prev_maybe: Option<i32> = None;
-    let mut cnt = 0;
-    for line in input.lines() {
-        let n = line.parse::<i32>()?;
-        match prev_maybe {
-            Some(prev) => {
-                if n > prev {
-                    cnt += 1;
-                }
-                prev_maybe = Some(n);
-            }
-            None => prev_maybe = Some(n),
-        };
-    }
+    let sum  = input.lines()
+        .filter_map(|s| s.parse::<usize>().ok())
+        .tuple_windows()
+        .filter(|(a,b)| *a < *b )
+        .count();
 
-    writeln!(io::stdout(), "part1: {}", cnt)?;
+    writeln!(io::stdout(), "part1: {}", sum)?;
     Ok(())
 }
 
@@ -37,16 +28,11 @@ fn part2(input: &str) -> Result<()> {
         let n = line.parse::<u32>()?;
         nums.push(n)
     }
-    let cnt: u32 = nums
+    let cnt = nums
         .iter()
         .tuple_windows::<(_, _, _, _)>()
-        .fold(0, |acc, tp| {
-            if tp.1 + tp.2 + tp.3 > tp.0 + tp.1 + tp.2 {
-                acc + 1
-            } else {
-                acc
-            }
-        });
+        .filter(|(&a, _, _, &d)| d > a)
+        .count();
 
     writeln!(io::stdout(), "part2: {}", cnt)?;
     Ok(())
