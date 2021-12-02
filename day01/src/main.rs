@@ -12,13 +12,14 @@ fn main() -> Result<()> {
 }
 
 fn part1(input: &str) -> Result<()> {
-    let sum  = input.lines()
+    let sum = input
+        .lines()
         .filter_map(|s| s.parse::<usize>().ok())
         .tuple_windows()
-        .filter(|(a,b)| *a < *b )
+        .filter(|(a, b)| *a < *b)
         .count();
 
-    writeln!(io::stdout(), "part1: {}", sum)?;
+    writeln!(io::stdout(), "part 1: {}", sum)?;
     Ok(())
 }
 
@@ -34,6 +35,6 @@ fn part2(input: &str) -> Result<()> {
         .filter(|(&a, _, _, &d)| d > a)
         .count();
 
-    writeln!(io::stdout(), "part2: {}", cnt)?;
+    writeln!(io::stdout(), "part 2: {}", cnt)?;
     Ok(())
 }
