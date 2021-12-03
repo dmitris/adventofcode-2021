@@ -31,7 +31,7 @@ fn part1(input: &str) -> Result<usize> {
                 0x31 => track[j] += 1,
                 _ => return Err(format!("bad input line {} only '0' and '1' allowed", line).into()),
             }
-        }        
+        }
     }
     let (gamma, epsilon) = track_to_number(&track)?;
     Ok(gamma*epsilon)
@@ -80,7 +80,7 @@ fn part2(input: &str) -> Result<usize> {
                 0x31 => track[j] += 1,
                 _ => return Err(format!("bad input line {} only '0' and '1' allowed", line).into()),
             }
-        }                
+        }
     }
     let (oxy_rating, scrubber_rating) = helper_part2(track.len(), oxygen, scrubber)?;
     Ok(oxy_rating * scrubber_rating)
@@ -97,11 +97,11 @@ fn helper_part2(rec_len: usize, mut oxygen: HashSet<usize>, mut scrubber: HashSe
         }
         if oxygen.len() > 1 {
             let (zeros, ones) = count_zeros_ones(&oxygen, mask);
-            if ones >= zeros { 
+            if ones >= zeros {
                 oxygen.retain(|&x| (x & mask) > 0);
             } else {
                 oxygen.retain(|&x| (x & mask) == 0);
-            }          
+            }
         }
         if scrubber.len() > 1 {
             let (zeros, ones) = count_zeros_ones(&scrubber, mask);
@@ -109,7 +109,7 @@ fn helper_part2(rec_len: usize, mut oxygen: HashSet<usize>, mut scrubber: HashSe
                 scrubber.retain(|&x| (x & mask) == 0);
             } else {
                 scrubber.retain(|&x| (x & mask) > 0);
-            }          
+            }
         }
         mask = mask >> 1;
     }
@@ -124,15 +124,53 @@ fn helper_part2(rec_len: usize, mut oxygen: HashSet<usize>, mut scrubber: HashSe
 }
 
 fn count_zeros_ones(s: &HashSet<usize>, mask: usize) -> (usize, usize) {
-    let mut zeros = 0;
-    let mut ones = 0;
+    s.iter()
+        .fold((0 as usize, 0 as usize), |(a, b), e| {
+            if e & mask > 0 {
+                (a+1, b)
+            } else {
+                (a, b+1)
+            }
+    })
 
-    for e in s {
-        if *e & mask > 0 {
-            ones += 1;
-        } else {
-            zeros += 1;
-        }
+    // // equivalent loop version:
+    // let (mut ones, mut zeros) : (usize, usize) = (0, 0);
+    // for e in s {
+    //     if e & mask > 0 {
+    //         ones += 1;
+    //     } else {
+    //         zeros += 1;
+    //     }
+    // }
+    // (ones, zeros)
+}
+
+#[cfg(test)]
+mod tests {
+    use std::collections::HashSet;
+
+    use super::{count_zeros_ones, part1, part2};
+
+    #[test]
+    fn test_count_zeros_ones() {
+        let hs = HashSet::from([0b00100, 0b11110, 0b10110]);
+        let mask = 0b10000;
+        assert_eq!( (2, 1), count_zeros_ones(&hs, mask));
+        let mask = 0b1000;
+        assert_eq!( (1, 2), count_zeros_ones(&hs, mask));
+        let mask = 0b100;
+        assert_eq!( (3, 0), count_zeros_ones(&hs, mask));
+        let mask = 0b10;
+        assert_eq!( (2, 1), count_zeros_ones(&hs, mask));
+        let mask = 0b1;
+        assert_eq!( (0, 3), count_zeros_ones(&hs, mask));
     }
-    (zeros, ones)
+
+    #[test]
+    fn test_small() {
+        let bytes = include_bytes!("../input/test01.txt");
+        let input = String::from_utf8_lossy(bytes);
+        assert_eq!(198, part1(&input).unwrap());
+        assert_eq!(230, part2(&input).unwrap());
+    }
 }
