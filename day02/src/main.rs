@@ -59,36 +59,31 @@ fn part2(input: &str) -> Result<i32> {
 
 #[test]
 fn test_part1() {
-    let bytes = include_bytes!("../input/test01.txt");
-    let input = String::from_utf8_lossy(bytes);
+    let input = include_str!("../input/test01.txt");
     assert_eq!(150, part1(&input).unwrap());
 }
 
 #[test]
 fn test_part1_full() {
-    let bytes = include_bytes!("../input/input.txt");
-    let input = String::from_utf8_lossy(bytes);
+    let input = include_str!("../input/input.txt");
     assert_eq!(1990000, part1(&input).unwrap());
 }
 
 #[test]
 fn test_part2() {
-    let bytes = include_bytes!("../input/test01.txt");
-    let input = String::from_utf8_lossy(bytes);
+    let input = include_str!("../input/test01.txt");
     assert_eq!(900, part2(&input).unwrap());
 }
 
 #[test]
 fn test_part2_full() {
-    let bytes = include_bytes!("../input/input.txt");
-    let input = String::from_utf8_lossy(bytes);
+    let input = include_str!("../input/input.txt");
     assert_eq!(1975421260, part2(&input).unwrap());
 }
 
 #[test]
 fn test_bad_input1() {
-    let bytes = include_bytes!("../input/bad01.txt");
-    let input = String::from_utf8_lossy(bytes);
+    let input = include_str!("../input/bad01.txt");
     let res1 = part1(&input);
     assert!(res1.is_err());
     let res2 = part2(&input);
@@ -97,8 +92,7 @@ fn test_bad_input1() {
 
 #[test]
 fn test_bad_input2() {
-    let bytes = include_bytes!("../input/bad02.txt");
-    let input = String::from_utf8_lossy(bytes);
+    let input = include_str!("../input/bad02.txt");
     let res1 = part1(&input);
     assert!(res1.is_err());
     let res2 = part2(&input);

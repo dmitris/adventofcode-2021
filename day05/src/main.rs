@@ -61,7 +61,7 @@ fn read_input(s: &str) -> Result<Vec<PointsPair>> {
     // Ok((nums, ret))
 }
 
-fn part1(data: &[PointsPair]) -> Result<usize> {
+fn part1(_data: &[PointsPair]) -> Result<usize> {
     Ok(42)
 }
 
@@ -70,8 +70,7 @@ fn part1(data: &[PointsPair]) -> Result<usize> {
 
 //     #[test]
 //     fn test_small() {
-//         let bytes = include_bytes!("../input/test01.txt");
-//         let input = String::from_utf8_lossy(bytes);
+//         let input = include_str!("../input/test01.txt");
 //         let (nums, boards) = read_input(&input).unwrap();
 //         assert_eq!(4512, part1(&nums, &boards).unwrap());
 //         assert_eq!(1924, part2(&nums, &boards).unwrap());
@@ -79,8 +78,7 @@ fn part1(data: &[PointsPair]) -> Result<usize> {
 
 //     #[test]
 //     fn test_full() {
-//         let bytes = include_bytes!("../input/input.txt");
-//         let input = String::from_utf8_lossy(bytes);
+//         let input = include_str!("../input/input.txt");
 //         let (nums, boards) = read_input(&input).unwrap();
 //         assert_eq!(11536, part1(&nums, &boards).unwrap());
 //         assert_eq!(1284, part2(&nums, &boards).unwrap());

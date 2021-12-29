@@ -192,16 +192,14 @@ mod tests {
 
     #[test]
     fn test_small() {
-        let bytes = include_bytes!("../input/test01.txt");
-        let input = String::from_utf8_lossy(bytes);
+        let input = include_str!("../input/test01.txt");
         assert_eq!(198, part1(&input).unwrap());
         assert_eq!(230, part2(&input).unwrap());
     }
 
     #[test]
     fn test_full() {
-        let bytes = include_bytes!("../input/input.txt");
-        let input = String::from_utf8_lossy(bytes);
+        let input = include_str!("../input/input.txt");
         assert_eq!(4118544, part1(&input).unwrap());
         assert_eq!(3832770, part2(&input).unwrap());
     }
